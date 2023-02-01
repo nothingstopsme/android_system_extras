@@ -44,7 +44,7 @@
 #endif
 
 int (*f2fs_format_device_dl)(void);
-void (*f2fs_init_configuration_dl)(struct f2fs_configuration *);
+void (*f2fs_init_configuration_dl)(void);
 void (*flush_sparse_buffs_dl)(void);
 void (*init_sparse_file_dl)(unsigned int, int64_t);
 void (*finalize_sparse_file_dl)(int);
@@ -54,9 +54,10 @@ int f2fs_format_device(void) {
 	assert(f2fs_format_device_dl);
 	return f2fs_format_device_dl();
 }
-void f2fs_init_configuration(struct f2fs_configuration *config) {
+void f2fs_init_configuration_proxy(void) {
 	assert(f2fs_init_configuration_dl);
-	f2fs_init_configuration_dl(config);
+	//f2fs_init_configuration_dl(config);
+	f2fs_init_configuration_dl();
 }
 void flush_sparse_buffs(void) {
 	assert(flush_sparse_buffs_dl);

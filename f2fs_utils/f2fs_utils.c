@@ -43,13 +43,15 @@ struct selabel_handle;
 extern void flush_sparse_buffs();
 extern void init_sparse_file(unsigned int block_size, int64_t len);
 extern void finalize_sparse_file(int fd);
+extern void f2fs_init_configuration_proxy(void);
 
 extern struct f2fs_configuration *f2fs_config;
 extern int dlopenf2fs();
 
 static void reset_f2fs_info() {
 	memset(f2fs_config, 0, sizeof(*f2fs_config));
-	f2fs_config->fd = -1;
+	//f2fs_config->fd = -1;
+	f2fs_config->dump_fd = -1;
 	f2fs_config->kd = -1;
 }
 
@@ -60,7 +62,8 @@ int make_f2fs_sparse_fd(int fd, long long len,
 		return -1;
 	}
 	reset_f2fs_info();
-	f2fs_init_configuration(f2fs_config);
+	//f2fs_init_configuration(f2fs_config);
+	f2fs_init_configuration_proxy();
 	len &= ~((__u64)(F2FS_BLKSIZE - 1));
 	f2fs_config->total_sectors = len / f2fs_config->sector_size;
 	f2fs_config->start_sector = 0;
